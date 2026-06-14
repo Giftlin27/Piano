@@ -4,30 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#11131a" />
-  <title>🎹 Live Piano</title>
+  <title>🎵 Chords</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <nav class="nav">
     <span class="brand">🎹 Piano</span>
-    <a href="./index.html" class="active">Live Piano</a>
-    <a href="./chords.html">Chords</a>
+    <a href="./index.html">Live Piano</a>
+    <a href="./chords.html" class="active">Chords</a>
     <a href="./organist.html">Organist</a>
   </nav>
 
   <header>
-    <h1>Live Piano</h1>
-    <p class="sub">Click / tap the keys, or use your computer keyboard
-      (<kbd>A</kbd> <kbd>W</kbd> <kbd>S</kbd> <kbd>E</kbd> <kbd>D</kbd> … starting at middle C).</p>
+    <h1>Chord Sheet</h1>
+    <p class="sub">Tap any chord to hear it.</p>
   </header>
 
   <main>
-    <div class="kb-wrap">
-      <div id="keyboard"></div>
+    <div class="grid-wrap">
+      <table id="grid" aria-label="Chord grid"></table>
     </div>
   </main>
 
   <footer><p>Sound synthesized in your browser with the Web Audio API.</p></footer>
-  <script type="module" src="./piano-page.js"></script>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>

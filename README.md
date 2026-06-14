@@ -10,13 +10,26 @@ Tap a chord, hear it. Two front-ends, one chord engine:
 
 ## 🌐 Use it on any device (web)
 
-Once Pages is enabled (see **Deployment** below) the app is live at:
+Live at:
 
 ```
 https://giftlin27.github.io/Piano/
 ```
 
-Open it on a phone, tablet, or computer and tap any chord. To run it locally:
+Three pages (top nav), all client-side — no install:
+
+- **🎹 Live Piano** (`index.html`) — a playable keyboard. Click/tap the keys
+  or use your computer keyboard (`A W S E D F …` from middle C).
+- **🎵 Chords** (`chords.html`) — the chord grid; tap a chord to hear it.
+- **🎼 Organist** (`organist.html`) — *send music and the keyboard plays it
+  back, visually + with sound.* Four inputs:
+  - **MIDI file** upload (most accurate, with timing),
+  - a **built-in demo song**,
+  - **typed notes** (e.g. `C4 E4 G4 C5:2`, chords with `+`, rests with `-`),
+  - **photo of sheet music** — *experimental* best-effort OMR (treble clef,
+    single line, often wrong; use MIDI for real accuracy).
+
+Run locally:
 
 ```powershell
 py -m http.server -d docs 8000   # then open http://localhost:8000
@@ -98,13 +111,22 @@ python -c "from synth import play; play('Amin7')"
 
 **Web app (deployed to Pages)**
 
-| File              | Role                                                      |
-|-------------------|----------------------------------------------------------|
-| `docs/index.html` | Page shell                                                |
-| `docs/style.css`  | Responsive dark UI                                        |
-| `docs/chords.js`  | Note frequencies + chord intervals (port of `chords.py`) |
-| `docs/synth.js`   | Web Audio synthesis (port of `synth.py`)                 |
-| `docs/app.js`     | Builds the grid, plays a chord on tap                    |
+| File                    | Role                                                       |
+|-------------------------|------------------------------------------------------------|
+| `docs/index.html`       | Live Piano page                                             |
+| `docs/chords.html`      | Chord grid page                                             |
+| `docs/organist.html`    | Organist (send music) page                                 |
+| `docs/style.css`        | Responsive dark UI                                          |
+| `docs/chords.js`        | Note theory: frequencies, chord intervals, name↔MIDI       |
+| `docs/synth.js`         | Web Audio engine (noteOn/Off, strike, playChord)           |
+| `docs/keyboard.js`      | Reusable playable keyboard component                        |
+| `docs/player.js`        | Schedules note events + keyboard highlighting               |
+| `docs/midi.js`          | Standard MIDI File parser → note events                     |
+| `docs/songs.js`         | Demo song(s) + text-notation parser                         |
+| `docs/omr.js`           | Experimental image → notes (best-effort OMR)                |
+| `docs/app.js`           | Builds the chord grid                                       |
+| `docs/piano-page.js`    | Wires the Live Piano page                                   |
+| `docs/organist-page.js` | Wires the Organist page inputs                              |
 
 **Excel app (local)**
 

@@ -55,3 +55,33 @@ export function chordFrequencies(name) {
   const base = midiNumber(root, BASE_OCTAVE);
   return QUALITIES[quality].map((i) => midiToFreq(base + i));
 }
+
+// --- Note name <-> MIDI (used by the keyboard, text parser, players) --------
+
+const FLAT_TO_SHARP = {
+  Db: "C#", Eb: "D#", Gb: "F#", Ab: "G#", Bb: "A#",
+  Cb: "B", Fb: "E",
+};
+const SHARP_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+
+// "C#4", "Bb3", "G" (octave defaults to 4) -> MIDI number. null if invalid.
+export function noteToMidi(text, defaultOctave = 4) {
+  const m = /^([A-Ga-g])([#b]?)(-?\d+)?$/.exec(text.trim());
+  if (!m) return null;
+  let letter = m[1].toUpperCase() + (m[2] || "");
+  if (letter in FLAT_TO_SHARP) letter = FLAT_TO_SHARP[letter];
+  else if (letter.endsWith("b")) letter = FLAT_TO_SHARP[letter] || letter;
+  const pc = NOTE_OFFSETS[letter];
+  if (pc === undefined) return null;
+  const octave = m[3] !== undefined ? parseInt(m[3], 10) : defaultOctave;
+  return 12 * (octave + 1) + pc;
+}
+
+// MIDI -> "C#4" (sharps).
+export function midiToName(midi) {
+  return SHARP_NAMES[((midi % 12) + 12) % 12] + (Math.floor(midi / 12) - 1);
+}
+
+export function isBlackKey(midi) {
+  return [1, 3, 6, 8, 10].includes(((midi % 12) + 12) % 12);
+}
