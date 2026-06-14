@@ -38,16 +38,28 @@ document.getElementById("demo-play").addEventListener("click", () => {
   playEvents(DEMO_SONGS[name], name);
 });
 
-// --- MIDI upload ---
+// --- MIDI upload (with replay) ---
+let midiEvents = null;
+let midiName = "";
+const midiPlayBtn = document.getElementById("midi-play");
+
 document.getElementById("midi-file").addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file) return;
   try {
     const buf = await file.arrayBuffer();
-    playEvents(parseMidi(buf), file.name);
+    midiEvents = parseMidi(buf);
+    midiName = file.name;
+    midiPlayBtn.disabled = midiEvents.length === 0;
+    playEvents(midiEvents, midiName);
   } catch (err) {
     setStatus(`Couldn't read MIDI: ${err.message}`);
+    midiEvents = null;
+    midiPlayBtn.disabled = true;
   }
+});
+midiPlayBtn.addEventListener("click", () => {
+  if (midiEvents) playEvents(midiEvents, midiName);
 });
 
 // --- Text notation ---

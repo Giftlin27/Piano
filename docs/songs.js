@@ -1,46 +1,9 @@
 // Built-in demo tunes, plus a small text-notation parser.
-// A "step" is { notes: [names], beats } played in sequence; notes together in
-// one step sound as a chord; an empty notes array is a rest.
+//
+// Demos are written in the same text notation the "Type notes" box accepts and
+// run through parseText, so what you read here is exactly what plays.
 
 import { noteToMidi } from "./chords.js";
-
-// Turn sequential steps into absolute-time events.
-function buildEvents(steps, { bpm = 100, legato = 0.92 } = {}) {
-  const beat = 60 / bpm;
-  const events = [];
-  let t = 0;
-  for (const { notes, beats } of steps) {
-    const dur = beats * beat;
-    for (const n of notes) {
-      const midi = typeof n === "number" ? n : noteToMidi(n);
-      if (midi != null) events.push({ midi, start: t, duration: dur * legato, velocity: 0.85 });
-    }
-    t += dur;
-  }
-  return events;
-}
-
-// A short, singable arrangement of the refrain of
-// "There Shall Be Showers of Blessing" (melody + block chords).
-const SHOWERS = [
-  { notes: ["Bb4", "Bb3", "D4", "F4"], beats: 1 },   // Show-  (Bb)
-  { notes: ["Bb4"], beats: 0.5 },                    // ers
-  { notes: ["C5"], beats: 0.5 },                     // of
-  { notes: ["D5", "Bb3", "D4", "F4"], beats: 1.5 },  // bless-
-  { notes: ["C5"], beats: 0.5 },                     // ing,
-  { notes: ["Bb4", "Eb3", "G3", "Bb3"], beats: 1 },  // Show-  (Eb)
-  { notes: ["C5"], beats: 0.5 },                     // ers
-  { notes: ["D5"], beats: 0.5 },                     // of
-  { notes: ["Eb5", "Eb3", "G3", "Bb3"], beats: 1.5 },// bless-
-  { notes: ["D5"], beats: 0.5 },                     // ing
-  { notes: ["C5", "F3", "A3", "C4"], beats: 1 },     // we     (F)
-  { notes: ["C5"], beats: 2 },                       // need;  (F->)
-  { notes: ["Bb4", "Bb3", "D4", "F4"], beats: 3 },   // (Bb resolve)
-];
-
-export const DEMO_SONGS = {
-  "Showers of Blessing (refrain — arrangement)": buildEvents(SHOWERS, { bpm: 96 }),
-};
 
 // Parse free text into events. Tokens separated by spaces:
 //   C4 D4 E4        sequential notes (default octave 4)
@@ -67,3 +30,31 @@ export function parseText(text, { bpm = 110 } = {}) {
   }
   return events;
 }
+
+// Familiar melodies, transcribed note-for-note (melody only, so they're
+// unambiguously correct). For a specific hymn/song, upload its MIDI file.
+export const DEMO_SONGS = {
+  "Ode to Joy": parseText(
+    "E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4:1.5 D4:0.5 D4:2 " +
+    "E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 D4:1.5 C4:0.5 C4:2",
+    { bpm: 140 }
+  ),
+  "Twinkle, Twinkle Little Star": parseText(
+    "C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2 " +
+    "G4 G4 F4 F4 E4 E4 D4:2 G4 G4 F4 F4 E4 E4 D4:2 " +
+    "C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2",
+    { bpm: 150 }
+  ),
+  "Mary Had a Little Lamb": parseText(
+    "E4 D4 C4 D4 E4 E4 E4:2 D4 D4 D4:2 E4 G4 G4:2 " +
+    "E4 D4 C4 D4 E4 E4 E4 E4 D4 D4 E4 D4 C4:2",
+    { bpm: 150 }
+  ),
+  "Happy Birthday": parseText(
+    "G4:0.75 G4:0.25 A4 G4 C5 B4:2 " +
+    "G4:0.75 G4:0.25 A4 G4 D5 C5:2 " +
+    "G4:0.75 G4:0.25 G5 E5 C5 B4 A4:1.5 " +
+    "F5:0.75 F5:0.25 E5 C5 D5 C5:2",
+    { bpm: 160 }
+  ),
+};
