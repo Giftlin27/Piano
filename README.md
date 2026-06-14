@@ -1,4 +1,41 @@
-# 🎹 Piano Chords in Excel
+# 🎹 Piano Chords
+
+Tap a chord, hear it. Two front-ends, one chord engine:
+
+- **Web app** (`docs/`) — runs in any browser on any device, no install.
+  Synthesizes sound with the Web Audio API. **This is what's deployed to
+  GitHub Pages.**
+- **Excel app** (`*.py`, `vba_glue.bas`) — click a cell in an Excel grid to
+  play the chord locally via a small Python backend.
+
+## 🌐 Use it on any device (web)
+
+Once Pages is enabled (see **Deployment** below) the app is live at:
+
+```
+https://giftlin27.github.io/Piano/
+```
+
+Open it on a phone, tablet, or computer and tap any chord. To run it locally:
+
+```powershell
+py -m http.server -d docs 8000   # then open http://localhost:8000
+```
+
+## Deployment (GitHub Pages)
+
+A workflow at `.github/workflows/deploy-pages.yml` publishes `docs/` on every
+push to `main`. Enable it **once**:
+
+**GitHub repo → Settings → Pages → Build and deployment → Source →
+“GitHub Actions”.**
+
+The next push (or re-running the workflow under the Actions tab) deploys the
+site. The Pages URL appears on the Actions run and in Settings → Pages.
+
+---
+
+## 🖥️ Excel version (local)
 
 Click a cell in an Excel grid and hear the chord. Excel is the UI; a small
 Python program is the sound engine.
@@ -58,6 +95,18 @@ python -c "from synth import play; play('Amin7')"
 ```
 
 ## Files
+
+**Web app (deployed to Pages)**
+
+| File              | Role                                                      |
+|-------------------|----------------------------------------------------------|
+| `docs/index.html` | Page shell                                                |
+| `docs/style.css`  | Responsive dark UI                                        |
+| `docs/chords.js`  | Note frequencies + chord intervals (port of `chords.py`) |
+| `docs/synth.js`   | Web Audio synthesis (port of `synth.py`)                 |
+| `docs/app.js`     | Builds the grid, plays a chord on tap                    |
+
+**Excel app (local)**
 
 | File               | Role                                                        |
 |--------------------|-------------------------------------------------------------|

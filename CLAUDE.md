@@ -4,10 +4,17 @@ Guidance for working in this repo.
 
 ## What this project is
 
-An Excel-fronted piano chord player. Excel is the UI (a clickable grid of
-chords); a small Python program is the sound engine. Clicking a chord cell
-fires a VBA event that shells out to Python, which synthesizes the chord and
-plays it through Windows' `winsound`.
+A piano chord player with **two front-ends sharing one chord model**:
+
+- **Web app** (`docs/`) — static site deployed to GitHub Pages; synthesizes
+  sound in-browser with the Web Audio API. Works on any device.
+- **Excel app** (Python) — clicking a cell fires VBA that shells out to Python,
+  which synthesizes the chord and plays it via Windows' `winsound`.
+
+The JS files in `docs/` are deliberate ports of the Python modules. **When you
+change chord theory or synthesis, update both sides** (`chords.py` ⇔
+`docs/chords.js`, `synth.py` ⇔ `docs/synth.js`) so the two front-ends stay
+identical.
 
 ```
 Excel .xlsm  --Worksheet_SelectionChange (VBA)-->  pyw play_chord.py "Cmaj"
@@ -38,10 +45,22 @@ and the player always agree on chord names.
 ## Commands
 
 ```powershell
-py -m pip install -r requirements.txt   # numpy + xlwings
-py build_workbook.py                     # (re)generate PianoChords.xlsm
-py play_chord.py "Gmaj7"                 # play a chord without Excel
+# Web app
+py -m http.server -d docs 8000           # serve locally at localhost:8000
+
+# Excel app
+py -m pip install -r requirements.txt    # numpy + xlwings (+ pytest)
+py build_workbook.py                      # (re)generate PianoChords.xlsm
+py play_chord.py "Gmaj7"                  # play a chord without Excel
+py -m pytest -q                           # run theory-layer tests
 ```
+
+## Deployment
+
+`.github/workflows/deploy-pages.yml` publishes `docs/` to GitHub Pages on push
+to `main`. One-time setup: repo Settings → Pages → Source → "GitHub Actions".
+Live URL: https://giftlin27.github.io/Piano/ . No build step — the workflow
+just uploads `docs/` as the Pages artifact.
 
 ## Environment notes (important)
 
