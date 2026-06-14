@@ -25,13 +25,13 @@ py -m http.server -d docs 8000   # then open http://localhost:8000
 ## Deployment (GitHub Pages)
 
 A workflow at `.github/workflows/deploy-pages.yml` publishes `docs/` on every
-push to `main`. Enable it **once**:
+push to `main`. It **enables Pages automatically** (`enablement: true`), so no
+manual setup is normally needed — just push and watch the Actions tab.
 
-**GitHub repo → Settings → Pages → Build and deployment → Source →
-“GitHub Actions”.**
-
-The next push (or re-running the workflow under the Actions tab) deploys the
-site. The Pages URL appears on the Actions run and in Settings → Pages.
+If your account/org blocks the workflow from enabling Pages, do it once by
+hand: **Settings → Pages → Build and deployment → Source → “GitHub Actions”**,
+then re-run the workflow. The Pages URL appears on the Actions run and in
+Settings → Pages.
 
 ---
 
