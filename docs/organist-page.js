@@ -3,14 +3,23 @@
 
 import { buildKeyboard } from "./keyboard.js";
 import { createPlayer } from "./player.js";
-import { resume } from "./synth.js";
+import { resume, setVoice, VOICE_NAMES } from "./synth.js";
 import { parseMidi } from "./midi.js";
 import { DEMO_SONGS, parseText } from "./songs.js";
 import { recognize } from "./omr.js";
 
-const kb = buildKeyboard(document.getElementById("keyboard"), { low: 36, high: 96 });
+const kb = buildKeyboard(document.getElementById("keyboard"), { low: 21, high: 108 });
 const player = createPlayer(kb);
 const status = document.getElementById("status");
+
+// Instrument voice selector.
+const voiceSel = document.getElementById("voice");
+for (const name of VOICE_NAMES) {
+  const opt = document.createElement("option");
+  opt.value = name; opt.textContent = name;
+  voiceSel.appendChild(opt);
+}
+voiceSel.addEventListener("change", () => setVoice(voiceSel.value));
 
 function setStatus(msg) { status.textContent = msg; }
 

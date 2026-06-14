@@ -1,12 +1,22 @@
-// Live Piano page: a playable keyboard (mouse / touch / computer keys).
+// Live Piano page: a full playable keyboard (mouse / touch / computer keys)
+// with a selectable instrument voice.
 
 import { buildKeyboard, attachComputerKeyboard } from "./keyboard.js";
-import { resume } from "./synth.js";
+import { resume, setVoice, VOICE_NAMES } from "./synth.js";
 
 const kb = buildKeyboard(document.getElementById("keyboard"), {
-  low: 48, high: 84, labels: true,   // C3 .. C6
+  low: 21, high: 108, labels: true,   // full 88-key piano, A0 .. C8
 });
-attachComputerKeyboard(kb, 60);      // computer keys start at C4
+attachComputerKeyboard(kb, 60);        // computer keys start at middle C
+
+// Instrument voice selector.
+const voiceSel = document.getElementById("voice");
+for (const name of VOICE_NAMES) {
+  const opt = document.createElement("option");
+  opt.value = name; opt.textContent = name;
+  voiceSel.appendChild(opt);
+}
+voiceSel.addEventListener("change", () => setVoice(voiceSel.value));
 
 // Unlock audio on the first interaction (mobile autoplay policy).
 window.addEventListener("pointerdown", resume, { once: true });
