@@ -1,0 +1,8 @@
+# Sound synthesis
+numpy>=1.24
+
+# Building the Excel workbook + injecting VBA (pulls in pywin32 on Windows)
+xlwings>=0.30
+
+# Dev only: run the test suite with `py -m pytest`
+pytest>=7.0

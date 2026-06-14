@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Generated audio cache
+cache/
+*.wav
+
+# Generated workbook (rebuild with: python build_workbook.py)
+PianoChords.xlsm
+play_chord.log
+
+# Excel temp / lock files
+~$*.xls*
+
+# OS
+Thumbs.db
+.DS_Store
