@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#11131a" />
+  <title>🎼 Organist</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <span class="brand">🎹 Piano</span>
+    <a href="./">Live Piano</a>
+    <a href="./chords">Chords</a>
+    <a href="./organist" class="active">Organist</a>
+  </nav>
+
+  <header>
+    <h1>Organist</h1>
+    <p class="sub">Send music — the keyboard plays it for you, visually and out loud.</p>
+  </header>
+
+  <main class="organist">
+    <div class="kb-wrap">
+      <div id="keyboard"></div>
+    </div>
+
+    <div class="transport">
+      <button id="stop" class="btn">⏹ Stop</button>
+      <label class="voice-label">🎚️ Voice
+        <select id="voice"></select>
+      </label>
+      <span class="legend">
+        <span class="dot right"></span>Right hand
+        <span class="dot left"></span>Left hand
+      </span>
+      <span id="status" class="status">Pick an input below.</span>
+    </div>
+
+    <div class="cards">
+      <section class="card">
+        <h2>🎵 Demo song</h2>
+        <p>A ready-made tune to try it out.</p>
+        <select id="demo-select"></select>
+        <button id="demo-play" class="btn primary">▶ Play</button>
+      </section>
+
+      <section class="card">
+        <h2>🎹 MIDI file <span class="tag">best results</span></h2>
+        <p>Upload a <code>.mid</code> file — plays accurately with timing.</p>
+        <input type="file" id="midi-file" accept=".mid,.midi,audio/midi" />
+        <button id="midi-play" class="btn primary" disabled>▶ Play again</button>
+      </section>
+
+      <section class="card">
+        <h2>⌨️ Type notes</h2>
+        <p>Space-separated, e.g. <code>C4 E4 G4 C5:2</code>. Chords with
+          <code>+</code> (<code>C4+E4+G4</code>), rests with <code>-</code>.</p>
+        <textarea id="text-input" rows="3"
+          placeholder="C4 D4 E4 F4 G4 A4 B4 C5"></textarea>
+        <button id="text-play" class="btn primary">▶ Play</button>
+      </section>
+
+      <section class="card experimental">
+        <h2>📷 Photo of sheet music <span class="tag warn">experimental</span></h2>
+        <p>Upload an image of printed music. This is a rough, best-effort
+          guess (treble clef, single line) and is often wrong — for accuracy
+          use MIDI.</p>
+        <input type="file" id="image-file" accept="image/*" />
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>Sound synthesized in your browser with the Web Audio API.</p>
+    <p class="credit">Created by
+      <a href="https://giftlin27.github.io/GiftPortfolio/" target="_blank" rel="noopener">Gift</a>
+      — <a href="https://giftlin27.github.io/GiftPortfolio/" target="_blank" rel="noopener">view portfolio ↗</a>
+    </p>
+  </footer>
+  <script type="module" src="./organist-page.js"></script>
+</body>
+</html>
