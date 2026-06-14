@@ -124,8 +124,19 @@ td.chord.active {
 }
 .key.white.down { background: var(--accent-press); }
 .key.black.down { background: #3a4870; }
+/* Playback highlight, coloured by hand. */
 .key.white.playing { background: var(--accent); }
 .key.black.playing { background: #5a7fd6; }
+.key.white.playing.right { background: #6ea8fe; }
+.key.black.playing.right { background: #3f6fd0; }
+.key.white.playing.left  { background: #57d9a3; }
+.key.black.playing.left  { background: #2f9e76; }
+
+/* Hand legend */
+.legend { color: var(--muted); font-size: 0.85rem; display: inline-flex; align-items: center; }
+.dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; margin: 0 4px 0 10px; }
+.dot.right { background: #6ea8fe; }
+.dot.left { background: #57d9a3; }
 
 /* --- Organist --------------------------------------------------------- */
 .organist { gap: 1rem; }
@@ -141,6 +152,8 @@ td.chord.active {
 }
 .btn:hover { background: #2b3146; }
 .btn.primary { background: var(--accent); color: #0b1020; border-color: transparent; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn:disabled:hover { background: var(--accent); }
 
 .cards {
   display: grid; gap: 1rem; width: 100%; max-width: 1100px;
@@ -168,6 +181,9 @@ td.chord.active {
 .tag.warn { background: var(--warn); }
 
 footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 1rem; }
+footer .credit { margin-top: 0.3rem; }
+footer .credit a { color: var(--accent); text-decoration: none; }
+footer .credit a:hover { text-decoration: underline; }
 
 @media (max-width: 480px) {
   h1 { font-size: 1.3rem; }

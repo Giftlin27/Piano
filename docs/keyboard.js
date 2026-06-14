@@ -85,11 +85,16 @@ export function buildKeyboard(container, { low = 48, high = 84, labels = false }
   return {
     element: container,
     range: { low, high },
-    highlight(midi, on) {
-      keyEls.get(midi)?.classList.toggle("playing", on);
+    highlight(midi, on, hand) {
+      const el = keyEls.get(midi);
+      if (!el) return;
+      el.classList.toggle("playing", on);
+      el.classList.toggle("left", on && hand === "left");
+      el.classList.toggle("right", on && hand === "right");
+      if (!on) el.classList.remove("left", "right");
     },
     clearHighlights() {
-      keyEls.forEach((el) => el.classList.remove("playing"));
+      keyEls.forEach((el) => el.classList.remove("playing", "left", "right"));
     },
   };
 }

@@ -16,18 +16,19 @@ Live at:
 https://giftlin27.github.io/Piano/
 ```
 
-Three pages (top nav), all client-side — no install:
+Two pages (top nav), all client-side — no install:
 
-- **🎹 Live Piano** (`index.html`) — a playable keyboard. Click/tap the keys
-  or use your computer keyboard (`A W S E D F …` from middle C).
-- **🎵 Chords** (`chords.html`) — the chord grid; tap a chord to hear it.
-- **🎼 Organist** (`organist.html`) — *send music and the keyboard plays it
-  back, visually + with sound.* Four inputs:
-  - **MIDI file** upload (most accurate, with timing),
+- **🎹 Live Piano** (`index.html`) — a full 88-key playable keyboard
+  (mouse / touch / computer keys `A W S E D F …` from middle C) with a
+  **voice selector** (Grand Piano, Church/Chapel Organ, Reed Harmonium,
+  Strings). Below it you can **load music and watch it play** on the keyboard,
+  with **left/right hands shown in different colours**:
+  - **MIDI file** upload (most accurate; replay button enables once loaded),
   - a **built-in demo song**,
   - **typed notes** (e.g. `C4 E4 G4 C5:2`, chords with `+`, rests with `-`),
   - **photo of sheet music** — *experimental* best-effort OMR (treble clef,
     single line, often wrong; use MIDI for real accuracy).
+- **🎵 Chords** (`chords.html`) — the chord grid; tap a chord to hear it.
 
 Run locally:
 
@@ -113,9 +114,8 @@ python -c "from synth import play; play('Amin7')"
 
 | File                    | Role                                                       |
 |-------------------------|------------------------------------------------------------|
-| `docs/index.html`       | Live Piano page                                             |
+| `docs/index.html`       | Live Piano page (keyboard, voices, music inputs)           |
 | `docs/chords.html`      | Chord grid page                                             |
-| `docs/organist.html`    | Organist (send music) page                                 |
 | `docs/style.css`        | Responsive dark UI                                          |
 | `docs/chords.js`        | Note theory: frequencies, chord intervals, name↔MIDI       |
 | `docs/synth.js`         | Web Audio engine (noteOn/Off, strike, playChord)           |
@@ -125,8 +125,7 @@ python -c "from synth import play; play('Amin7')"
 | `docs/songs.js`         | Demo song(s) + text-notation parser                         |
 | `docs/omr.js`           | Experimental image → notes (best-effort OMR)                |
 | `docs/app.js`           | Builds the chord grid                                       |
-| `docs/piano-page.js`    | Wires the Live Piano page                                   |
-| `docs/organist-page.js` | Wires the Organist page inputs                              |
+| `docs/piano-page.js`    | Wires Live Piano: keyboard, voices, and all music inputs   |
 
 **Excel app (local)**
 

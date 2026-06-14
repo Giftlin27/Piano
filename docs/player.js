@@ -31,11 +31,13 @@ export function createPlayer(keyboard) {
 
     for (const ev of events) {
       const vel = ev.velocity ?? 0.85;
+      // Split hands: notes below middle C (60) = left hand, otherwise right.
+      const hand = ev.hand || (ev.midi < 60 ? "left" : "right");
       strike(ev.midi, t0 + ev.start, ev.duration, vel);
       // Visual highlight, scheduled in wall-clock time.
-      timers.push(setTimeout(() => keyboard.highlight(ev.midi, true),
+      timers.push(setTimeout(() => keyboard.highlight(ev.midi, true, hand),
                              (lead + ev.start) * 1000));
-      timers.push(setTimeout(() => keyboard.highlight(ev.midi, false),
+      timers.push(setTimeout(() => keyboard.highlight(ev.midi, false, hand),
                              (lead + ev.start + ev.duration) * 1000));
       total = Math.max(total, ev.start + ev.duration);
     }
